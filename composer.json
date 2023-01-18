@@ -1,0 +1,20 @@
+{
+    "name": "maksa988/monobank-acquiring",
+    "type": "library",
+    "require": {
+        "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Maksa988\\MonobankAcquiring\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maxim",
+            "email": "maksa988ua@gmail.com"
+        }
+    ]
+}
