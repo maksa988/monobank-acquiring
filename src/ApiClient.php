@@ -63,7 +63,7 @@ class ApiClient
 
             $data = json_decode($_response->getBody()->getContents(), true);
 
-            return $response->toModel($data);
+            return $response->toModel($data ?? []);
         } catch (BadResponseException $e) {
             throw new InvalidResponseException($e->getResponse(), $e->getRequest());
         }
@@ -96,6 +96,21 @@ class ApiClient
     }
 
     /**
+     * @return array
+     */
+    public function getDefaultClientOptions(): array
+    {
+        return [
+            'base_uri' => $this->config->getBaseUri(),
+            'connect_timeout' => $this->config->getConnectionTimeout(),
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'X-Token' => $this->config->getToken(),
+            ]
+        ];
+    }
+
+    /**
      * @return Client
      * @throws \Exception
      */
@@ -105,13 +120,6 @@ class ApiClient
             return $this->client;
         }
 
-        return $this->client = new Client([
-            'base_uri' => $this->config->getBaseUri(),
-            'connect_timeout' => $this->config->getConnectionTimeout(),
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'X-Token' => $this->config->getToken(),
-            ]
-        ]);
+        return $this->client = new Client($this->getDefaultClientOptions());
     }
 }
